@@ -44,6 +44,8 @@ class Token extends Model
      */
     protected $dates = [
         'expires_at',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -73,6 +75,17 @@ class Token extends Model
         $provider = config('auth.guards.api.provider');
 
         return $this->belongsTo(config('auth.providers.'.$provider.'.model'));
+    }
+
+
+    /**
+     * Get the device that the token belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function device()
+    {
+        return $this->belongsTo("App\Models\Device", "device_id", "id");
     }
 
     /**
